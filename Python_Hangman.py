@@ -7,10 +7,7 @@ def setupGlobals():
     TRIES = 6 #how many tries the player gets to guess the word
 
     global DICT_WORD
-    DICT_WORD = list(random.choice(LINES)) #select random word ALSO needed for 'game over'
-
-    global WORD_COPY
-    WORD_COPY = list(DICT_WORD) #copy the word for manipulation during game   
+    DICT_WORD = list(random.choice(LINES)) #select random word ALSO needed for 'game over' 
 
     global GUESSED_WORD
     GUESSED_WORD = []
@@ -63,7 +60,7 @@ def main():
             printWrongGuesses()
             printHangman()
 
-            letter = input("please guess a letter: ")
+            letter = input("\nplease guess a letter: ")
             
             if not checkLetter(letter):
                 addToGuessesList(letter)
@@ -172,14 +169,13 @@ def addToGuessesList(letter):
 """-----------------------------------------------------------------"""
 def checkLetter(letter):
 
-    indices = [i for i, x in enumerate(WORD_COPY) if x == letter]
+    indices = [i for i, x in enumerate(DICT_WORD) if x == letter]
     
     if not indices:
         return False
 
     for index in indices:
         GUESSED_WORD[index] = letter
-        WORD_COPY[index] = ""
 
     return True
 """-----------------------------------------------------------------"""
