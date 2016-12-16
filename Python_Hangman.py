@@ -3,22 +3,22 @@ import random
 """-----------------------------------------------------------------"""
 def setupGlobals():   
 
-    global TRIES
-    TRIES = 6 #how many tries the player gets to guess the word
+    global g_TRIES
+    g_TRIES = 6 #how many tries the player gets to guess the word
 
-    global DICT_WORD
-    DICT_WORD = list(random.choice(LINES)) #select random word ALSO needed for 'game over' 
+    global g_DICT_WORD
+    g_DICT_WORD = list(random.choice(LINES)) #select random word ALSO needed for 'game over' 
 
-    global GUESSED_WORD
-    GUESSED_WORD = []
-    for i in range(0, len(DICT_WORD)):
-        GUESSED_WORD.append('*') #word the player sees
+    global g_GUESSED_WORD
+    g_GUESSED_WORD = []
+    for i in range(0, len(g_DICT_WORD)):
+        g_GUESSED_WORD.append('*') #word the player sees
 
-    global GUESSES_LIST
-    GUESSES_LIST = [] #the incorrect guesses
+    global g_GUESSES_LIST
+    g_GUESSES_LIST = [] #the incorrect guesses
 
-    global NUM_OF_BAD_GUESSES
-    NUM_OF_BAD_GUESSES = 0 #counter for num of incorrect guesses
+    global g_NUM_OF_BAD_GUESSES
+    g_NUM_OF_BAD_GUESSES = 0 #counter for num of incorrect guesses
 """-----------------------------------------------------------------"""
 
 """-----------------------------------------------------------------"""
@@ -51,7 +51,7 @@ def main():
         print("A random word has been selected...")
         input("Press ENTER to continue...")
         
-        global NUM_OF_BAD_GUESSES
+        global g_NUM_OF_BAD_GUESSES
 
         while True: 
 
@@ -64,16 +64,16 @@ def main():
             
             if not checkLetter(letter):
                 addToGuessesList(letter)
-                NUM_OF_BAD_GUESSES += 1 
+                g_NUM_OF_BAD_GUESSES += 1 
 
-            if GUESSED_WORD == DICT_WORD:
+            if g_GUESSED_WORD == g_DICT_WORD:
                 clearScreen()
                 printGuessedWord()
                 printWrongGuesses()
                 printHangman()
                 play = doGameWon()
                 break   
-            elif NUM_OF_BAD_GUESSES == TRIES:
+            elif g_NUM_OF_BAD_GUESSES == g_TRIES:
                 clearScreen()
                 printGuessedWord()
                 printWrongGuesses()
@@ -87,7 +87,7 @@ def main():
 def doGameWon():
 
     print("\nCONGRATULATIONS! YOU WON!!!")
-    print("You correctly guessed " + ''.join(GUESSED_WORD))
+    print("You correctly guessed " + ''.join(g_GUESSED_WORD))
     play = doPlayAgain()
     return play
 """-----------------------------------------------------------------"""
@@ -95,7 +95,7 @@ def doGameWon():
 """-----------------------------------------------------------------"""
 def doGameOver():
 
-    print("\nGame Over. The word was " + ''.join(DICT_WORD))
+    print("\nGame Over. The word was " + ''.join(g_DICT_WORD))
     play = doPlayAgain()
     return play
 """-----------------------------------------------------------------"""
@@ -116,13 +116,13 @@ def doPlayAgain():
 """-----------------------------------------------------------------"""
 def printWrongGuesses():
 
-    print(''.join(GUESSES_LIST) + "\n")
+    print(''.join(g_GUESSES_LIST) + "\n")
 """-----------------------------------------------------------------"""
 
 """-----------------------------------------------------------------"""
 def printGuessedWord():
 
-    print(''.join(GUESSED_WORD), end="                    ")
+    print(''.join(g_GUESSED_WORD), end="                    ")
 """-----------------------------------------------------------------"""
 
 """-----------------------------------------------------------------"""
@@ -131,22 +131,22 @@ def printHangman():
            [[], [], []],
            [[], [], []]]
 
-    if NUM_OF_BAD_GUESSES > 0:
+    if g_NUM_OF_BAD_GUESSES > 0:
         board[0][1] = '0'
 
-    if NUM_OF_BAD_GUESSES > 1:
+    if g_NUM_OF_BAD_GUESSES > 1:
         board[1][1] = '|'
 
-    if NUM_OF_BAD_GUESSES > 2:
+    if g_NUM_OF_BAD_GUESSES > 2:
         board[2][0] = '/'
 
-    if NUM_OF_BAD_GUESSES > 3:
+    if g_NUM_OF_BAD_GUESSES > 3:
         board[2][2] = '\\'
 
-    if NUM_OF_BAD_GUESSES > 4:
+    if g_NUM_OF_BAD_GUESSES > 4:
         board[1][0] = '-'
 
-    if NUM_OF_BAD_GUESSES > 5:
+    if g_NUM_OF_BAD_GUESSES > 5:
         board[1][2] = '-'
 
     for cell in board:
@@ -163,19 +163,19 @@ def clearScreen():
 """-----------------------------------------------------------------"""
 def addToGuessesList(letter):
     
-    GUESSES_LIST.append(letter)
+    g_GUESSES_LIST.append(letter)
 """-----------------------------------------------------------------"""
 
 """-----------------------------------------------------------------"""
 def checkLetter(letter):
 
-    indices = [i for i, x in enumerate(DICT_WORD) if x == letter]
+    indices = [i for i, x in enumerate(g_DICT_WORD) if x == letter]
     
     if not indices:
         return False
 
     for index in indices:
-        GUESSED_WORD[index] = letter
+        g_GUESSED_WORD[index] = letter
 
     return True
 """-----------------------------------------------------------------"""
